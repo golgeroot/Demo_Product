@@ -17,4 +17,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EnittyLayer\EntityLayer.csproj" />
+  </ItemGroup>
+
 </Project>
