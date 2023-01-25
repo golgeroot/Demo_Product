@@ -1,6 +1,8 @@
 ﻿using BussinesLayer.Concrete;
+using BussinesLayer.FluentValidation;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Demo_Product.Controllers
@@ -21,8 +23,21 @@ namespace Demo_Product.Controllers
         [HttpPost]
         public IActionResult AddProduct(Product p)
         {
-            productManager.TInsert(p);
-            return RedirectToAction("Index");
+            ProductValidator validationRules= new ProductValidator();
+            ValidationResult results= validationRules.Validate(p);
+            if(results.IsValid)
+            {
+                productManager.TInsert(p);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                foreach (var item in results.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+            }
+            return View();
         }
     }
 }
