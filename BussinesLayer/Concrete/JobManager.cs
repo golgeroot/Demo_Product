@@ -17,7 +17,6 @@ namespace BussinesLayer.Concrete
         {
             _jobDal = jobDal;
         }
-
         public void TDelete(Job t)
         {
             _jobDal.Delete(t);
